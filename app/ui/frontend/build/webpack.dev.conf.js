@@ -57,7 +57,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     //**********************************//
     //
     new HtmlWebpackPlugin({
-      filename: 'layout.html',
+      filename: config.build.index,
       template: 'layout.html',
       inject: true
     }),
