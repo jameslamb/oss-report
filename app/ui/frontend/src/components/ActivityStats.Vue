@@ -11,9 +11,15 @@
         </div>
 
         <p>Total activity: {{ num_events}}</p>
-        
-        <h3>Contributions</h3>
 
+        <h3>Summary/h3>
+        <ul>
+          <li v-for="activity in activities">
+            {{ activity.name }} ({{ activity.count }})
+          </li>
+        </ul>
+
+        <h3>All Contributions</h3>
         <ul>
           <li v-for="event in events">
             <a :href="event.evidence_url" target="_blank">{{ event.repo_name }} ({{ event.type }})</a>
@@ -35,6 +41,7 @@ export default {
       num_events: 0,
       events: [],
       user: "",
+      activities: [],
       github_user: "",
     }
   },
@@ -47,6 +54,7 @@ export default {
         this.events = parsed.events;
         this.user = parsed.user;
         this.num_events = parsed.total;
+        this.activities = parsed.activities;
       })
     }
   }

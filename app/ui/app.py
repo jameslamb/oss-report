@@ -34,11 +34,50 @@ def get_events():
     events = client.get_events_for_user(user)
     assert isinstance(events, list)
 
+    # create the "activity" section
+    # TODO:
+    # There are definitely more elegant ways to do
+    # this and it prolly belongs in the client
+    type_map = {
+        'IssuesEvent': "issues created",
+        'PullRequestEvent': "PRs created",
+        'PushEvent': "Commits pushed",
+        'ForkEvent': "Repos forked"
+    }
+
+    # Denormalize out some summary stats
+    activities = {}
+
+    for event in events:
+        activity_key = type_map[event["type"]]
+        repo = event["repo_name"]
+        if activities.get(activity_key, None) is None:
+            activities[activity_key] = {
+                "count": 1,
+                "repos": {
+                    repo: 1
+                }
+            }
+        else:
+            activities[activity_key]['count'] += 1
+            if activities[activity_key]["repos"].get(repo, None) is None:
+                activities[activity_key]["repos"][repo] = 1
+            else:
+                activities[activity_key]["repos"][repo] += 1
+
+    # Turn into a list instead of dict of dicts
+    activity_list = []
+    for k, v in activities.items():
+        x = v.copy()
+        x['name'] = k
+        activity_list.append(x)
+
     # Return a comma-delimited list of tokens
     return(jsonify({
         "user": user,
         "events": events,
-        "total": len(events)
+        "total": len(events),
+        "activities": activity_list
     }))
 
 
