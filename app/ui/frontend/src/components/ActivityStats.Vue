@@ -10,16 +10,15 @@
           <button v-on:click.prevent="get_events">Get Stats</button>
         </div>
 
-        <p>Total activity: {{ num_events}}</p>
+        <h3>Summary:</h3>
 
-        <h3>Summary/h3>
         <ul>
           <li v-for="activity in activities">
             {{ activity.name }} ({{ activity.count }})
           </li>
         </ul>
 
-        <h3>All Contributions</h3>
+        <h3>All Contributions:</h3>
         <ul>
           <li v-for="event in events">
             <a :href="event.evidence_url" target="_blank">{{ event.repo_name }} ({{ event.type }})</a>
