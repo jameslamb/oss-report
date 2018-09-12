@@ -6,7 +6,11 @@ from requests.utils import parse_header_links
 
 
 class GithubClient():
-    events_url = "https://api.github.com/users/{}/events"
+    """
+    References:
+        https://developer.github.com/v3/#pagination
+    """
+    events_url = "https://api.github.com/users/{}/events?per_page=100"
 
     def __init__(self):
         self.event_types = [
@@ -95,20 +99,23 @@ class GithubClient():
         # TODO (james.lamb@uptake.com):
         # there is def a better way
         event_type = event['type']
-
         if event_type == 'IssuesEvent':
-            out = {
-                "type": event["type"],
-                "repo_name": event['repo']['name'],
-                "evidence_url": event['payload']['issue']['html_url']
-            }
+            # For now, care about issues opened
+            if event['payload']['action'] == 'opened':
+                out = {
+                    "type": event["type"],
+                    "repo_name": event['repo']['name'],
+                    "evidence_url": event['payload']['issue']['html_url']
+                }
 
         if event_type == 'PullRequestEvent':
-            out = {
-                "type": event["type"],
-                "repo_name": event['repo']['name'],
-                "evidence_url": event['payload']['pull_request']['html_url']
-            }
+            # For now, care about PRs opened
+            if event['payload']['action'] == 'opened':
+                out = {
+                    "type": event["type"],
+                    "repo_name": event['repo']['name'],
+                    "evidence_url": event['payload']['pull_request']['html_url']
+                }
 
         if event_type == 'PushEvent':
             out = {

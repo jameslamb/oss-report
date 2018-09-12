@@ -4,7 +4,22 @@
     <div class="row">
       <div class="col-lg">
         
+        <div>
+          Github username: <br>
+          <input type="text" v-model="github_user" class="username_input_form"></input>
+          <button v-on:click.prevent="get_events">Get Stats</button>
+        </div>
+
         <p>Total activity: {{ num_events}}</p>
+        
+        <h3>Contributions</h3>
+
+        <ul>
+          <li v-for="event in events">
+            <a :href="event.evidence_url" target="_blank">{{ event.repo_name }} ({{ event.type }})</a>
+          </li>
+        </ul>
+
       
       </div>
     </div>
@@ -17,7 +32,22 @@ export default {
   name: 'ActivityStats',
   data () {
     return {
-      num_events: 0
+      num_events: 0,
+      events: [],
+      user: "",
+      github_user: "",
+    }
+  },
+  methods: {
+    // get events for a user
+    get_events: function(){
+      this.$http.get("/api/events?user=" + this.github_user)
+      .then(function(data) {
+        var parsed = JSON.parse(data.bodyText);
+        this.events = parsed.events;
+        this.user = parsed.user;
+        this.num_events = parsed.total;
+      })
     }
   }
 }
@@ -27,14 +57,6 @@ export default {
 <style scoped>
 h1, h2 {
   font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 a {
   color: #42b983;
