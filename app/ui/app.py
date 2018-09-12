@@ -19,7 +19,6 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 # Set up client
 stdout.write("Initializing client...\n")
 client = GithubClient()
-global client
 stdout.write("Initializing Github client\n")
 
 
@@ -29,7 +28,7 @@ def get_events():
     This method accepts resume text and routes it to
     the appropriate location.
     """
-    global model
+    global client
 
     user = request.args.get('user')
     events = client.get_events_for_user(user)
@@ -52,7 +51,7 @@ def about_page(path):
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST'])
 @app.route('/<path:path>')
 def catch_all(path):
-    return render_template("app.html")
+    return render_template("home.html")
 
 
 if __name__ == '__main__':

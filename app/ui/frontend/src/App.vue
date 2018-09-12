@@ -10,33 +10,3 @@ export default {
   name: 'App'
 }
 </script>
-
-<style lang="css">
-
-/*****************/
-/* Main elements */
-/*****************/
-body, html {
-    padding-bottom: 0px;
-    margin-bottom: 0px;
-}
-
-/***************/
-/* Site Footer */
-/***************/
-footer {
-    width: 100%;
-    background-color: #f7f7f9;
-    bottom: 0;
-    margin: 0;
-    padding: 0;
-}
-.footer-text {
-    text-align: left;
-    color: black;
-    padding-top: 10px;
-    padding-left: 40px;
-    padding-bottom: 0px;
-    background-color: #f7f7f9;
-}
-</style>

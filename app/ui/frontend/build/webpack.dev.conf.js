@@ -25,7 +25,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'home.html') },
       ],
     },
     hot: true,
@@ -51,10 +51,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
+    //
+    //**********************************//
+    // Put other static HTML stuff here //
+    //**********************************//
+    //
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
+      filename: 'layout.html',
+      template: 'layout.html',
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'home.html',
+      template: 'home.html',
       inject: true
     }),
     // copy custom static assets
