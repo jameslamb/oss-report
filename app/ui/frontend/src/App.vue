@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <router-view name="activity_stats"></router-view>
   </div>
 </template>
 
