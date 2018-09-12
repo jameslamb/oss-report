@@ -5,11 +5,17 @@
       <div class="col-lg">
         
         <div>
-          Github username: <br>
+          <b>Github username:</b> <br>
           <input type="text" v-model="github_user" class="username_input_form"></input>
           <button v-on:click.prevent="get_events">Get Stats</button>
         </div>
+        <br>
+        <hr>
+      </div>
+    </div>
 
+    <div class = "row">
+      <div class="col-4">
         <h3>Summary:</h3>
 
         <ul>
@@ -17,13 +23,18 @@
             {{ activity.name }} ({{ activity.count }})
           </li>
         </ul>
+      </div>
 
+      <div class="col-8">
         <h3>All Contributions:</h3>
         <ul>
           <li v-for="event in events">
             <a :href="event.evidence_url" target="_blank">{{ event.repo_name }} ({{ event.type }})</a>
           </li>
         </ul>
+      </div>
+
+    </div>
 
       
       </div>
