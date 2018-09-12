@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 MAINTAINER James Lamb <jaylamb20@gmail.com>
 
 # Add Python 3 to this thang

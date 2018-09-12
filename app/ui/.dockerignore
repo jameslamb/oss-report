@@ -3,3 +3,4 @@
 frontend/dist/
 frontend/node_modules/
 __pycache__/
+frontend/package-lock.json
