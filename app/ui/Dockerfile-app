@@ -20,7 +20,8 @@ EXPOSE 5090
 RUN pip install \
     # flask deps \
     Flask \
-    flask_cors
+    flask_cors \
+    simplejson
 
 # Change dirs to wherever the flask code is
 WORKDIR /opt/services/flaskapp/src

@@ -5,13 +5,13 @@ This little app allows you to visualize the activity of a GitHub user. It's that
 Kick up the app
 
 ```
-python app.py -p 8080
+cd ui && docker-compose up -d
 ```
 
 Hit it
 
 ```
-curl -XGET http://localhost:8080/jameslamb
+curl -XGET http://localhost:5090/api/events?user=jameslamb
 ```
 
 ## References
