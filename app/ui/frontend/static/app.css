@@ -1,0 +1,69 @@
+/*****************/
+/* Main elements */
+/*****************/
+body, html {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    background-color: #f4f4f9;
+}
+
+/******************/
+/* Navigation Bar */
+/******************/
+nav {
+    color: white;
+    background-color: #41658a;
+}
+
+nav a {
+    color: white;
+    background-color: #41658a;
+}
+
+/***************/
+/* Site Footer */
+/***************/
+footer {
+    width: 100%;
+    background-color: #f7f7f9;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-text {
+    font-size: 12px;
+    text-align: left;
+    color: black;
+    padding-top: 10px;
+    padding-left: 80px;
+    padding-bottom: 0px;
+    background-color: #f7f7f9;
+}
+
+/*****************/
+/* section stuff */
+/*****************/
+section {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/****************/
+/* skills items */
+/****************/
+li .skill_has {
+  color: green;
+}
+li .skill_missing {
+  color: red;
+}
+
+/***********/
+/* buttons */
+/***********/
+button {
+    border-radius: 8px;
+    background-color: #04724d;
+    color: white;
+}
