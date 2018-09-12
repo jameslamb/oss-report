@@ -34,7 +34,12 @@ class GithubClient():
         for event in events:
             event_type = event['type']
             if event_type in self.event_types:
-                parsed = self._parse_event(event)
+                try:
+                    parsed = self._parse_event(event)
+                except:
+                    print("WARNING: could not parse event")
+                    print(event)
+                    parsed = None
                 if parsed is not None:
                     events_filtered.append(parsed)
 
@@ -121,7 +126,10 @@ class GithubClient():
             out = {
                 "type": event["type"],
                 "repo_name": event['repo']['name'],
-                "evidence_url": event['payload']['commits'][0]['url']
+                "evidence_url": "{}/commit/{}".format(
+                    event['repo']['url'],
+                    event['payload']['commits'][0]['sha']
+                )
             }
 
         if event_type == 'ForkEvent':
