@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import Router from 'vue-router'
-import ActivityStats from '@/components/ActivityStats'
+import ActivityStats from '@/components/ActivityStats.vue'
 
 Vue.use(Router)
 
