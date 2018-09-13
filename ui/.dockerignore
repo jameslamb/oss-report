@@ -1,6 +1,8 @@
 
 # build artifacts
-#frontend/dist/
-#frontend/node_modules/
-#__pycache__/
-#frontend/package-lock.json
+frontend/dist/
+frontend/node_modules/
+frontend/package-lock.json
+
+# python stuff
+__pycache__/

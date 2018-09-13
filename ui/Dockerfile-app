@@ -27,7 +27,7 @@ RUN pip install \
 WORKDIR /opt/services/flaskapp/src/frontend
 
 # Build the application
-#RUN npm install && \
-#    npm run build
+RUN npm install && \
+    npm run build
 
 CMD python /opt/services/flaskapp/src/app.py

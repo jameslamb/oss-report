@@ -3,7 +3,7 @@
   <section class="section">
     <div class="row">
       <div class="col-lg">
-        
+
         <div>
           <b>Github username:</b> <br>
           <input type="text" v-model="github_user" class="username_input_form"></input>
@@ -36,7 +36,6 @@
 
     </div>
 
-      
       </div>
     </div>
   </section>
