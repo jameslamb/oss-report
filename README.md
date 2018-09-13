@@ -5,7 +5,7 @@ This little app allows you to visualize the activity of a GitHub user. It's that
 Kick up the app
 
 ```
-cd app && docker-compose up -d
+docker-compose up -d
 ```
 
 Hit it

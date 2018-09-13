@@ -2,7 +2,7 @@
 # Python stuff
 .ipynb_checkpoints/
 *.ipynb
-app/ui/__pycache__/
+ui/__pycache__/
 
 # misc
 .DS_Store
@@ -19,6 +19,6 @@ yarn-error.log*
 *.sln
 
 # UI stuff
-app/ui/frontend/package-lock.json
-app/ui/frontend/node_modules/
-app/ui/frontend/dist/
+ui/frontend/package-lock.json
+ui/frontend/node_modules/
+ui/frontend/dist/
