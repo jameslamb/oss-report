@@ -66,9 +66,10 @@ class GithubClient():
             res = requests.get(
                url=next_url
             )
+            res.raise_for_status()
 
             # add result to results
-            res_list = json.loads(res.content)
+            res_list = json.loads(res.text)
             assert isinstance(res_list, list)
 
             # drop results in our list
