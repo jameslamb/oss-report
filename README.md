@@ -1,4 +1,4 @@
-# user_report
+# oss_report
 
 This little app allows you to visualize the activity of a GitHub user. It's that simple.
 
