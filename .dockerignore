@@ -1,0 +1,19 @@
+
+# build artifacts
+frontend/dist/
+frontend/node_modules/
+frontend/package-lock.json
+ui/frontend/dist/
+ui/frontend/node_modules/
+ui/frontend/package-lock.json
+
+# python stuff
+__pycache__/
+ui/__pycache__/
+
+# misc
+.gitignore
+publish.sh
+README.md
+VERSION
+.git/

@@ -14,7 +14,11 @@ cd oss_report
 Kick up the app
 
 ```
-docker-compose up -d
+# Build
+docker build -t oss_report:$(cat VERSION) -f Dockerfile-app .
+
+# Run
+docker run -p 5090:5090 -d oss_report:$(cat VERSION)
 ```
 
 ## From dockerhub
