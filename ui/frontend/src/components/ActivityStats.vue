@@ -7,7 +7,7 @@
         <div>
           <b>Github username:</b> <br>
           <input type="text" v-model="github_user" class="username_input_form"></input>
-          <button v-on:click.prevent="get_events">Get Stats</button>
+          <button v-on:click.prevent="getEvents">Get Stats</button>
         </div>
         <p v-if="error" class="error-text">{{ errorText }}</p>
         <br>
@@ -26,11 +26,16 @@
         </ul>
       </div>
 
-      <div class="col-8">
-        <h3>All Contributions:</h3>
+      <div class="col-4">
+        <h3>Repos:</h3>
         <ul>
-          <li v-for="(event, index) in events" :key="index">
-            <a :href="event.evidence_url" target="_blank">{{ event.repo_name }} ({{ event.type }})</a>
+          <li v-for="(repoEvents, repoName) in repos" :key="repoName">
+            <a target="_blank" :href="`https://github.com/${repoName}`">{{ repoName }}</a>
+            <ul>
+              <li v-for="(events, eventName) in repoEvents" :key="eventName">
+                {{ eventName }} ({{ events.length }})
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -42,14 +47,15 @@
 </template>
 
 <script>
+import userTransformer from '../transformers/user';
+import repoTransformer from '../transformers/repo';
+
 export default {
   name: 'ActivityStats',
   data () {
     return {
-      num_events: 0,
-      events: [],
-      user: "",
       activities: [],
+      repos: [],
       github_user: "",
       error: null
     }
@@ -61,20 +67,18 @@ export default {
     }
   },
   methods: {
-    // get events for a user
-    get_events() {
-      this.$http.get("/api/events?user=" + this.github_user)
-      .then(data => {
-        var parsed = JSON.parse(data.bodyText);
-        this.events = parsed.events;
-        this.user = parsed.user;
-        this.num_events = parsed.total;
-        this.activities = parsed.activities;
-        this.error = null;
-      })
-      .catch(err => {
+    async getEvents() {
+      const data = await this.$http.get("/api/events?user=" + this.github_user).catch(err => {
         this.error = err;
-      })
+        console.error(err);
+      });
+
+      const userData = userTransformer(data.bodyText);
+      const repos = repoTransformer(userData.events);
+      this.user = userData.user;
+      this.activities = userData.activities;
+      this.repos = repos;
+      this.error = null;
     }
   }
 }
