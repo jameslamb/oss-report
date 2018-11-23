@@ -49,6 +49,14 @@ If, for whatever reason, you want to build and push a version of this to your ow
 
 Note that this will tag the container with the version number stored in `VERSION`.
 
+## Authentication with the Github API
+
+Note that this service hits the Github API. This API's [rate limit policy](https://developer.github.com/v3/#rate-limiting) states that unauthenticated requests are limited (by IP address) to 60 requests per hour. Authenticated requests are limited to 5000 an hour.
+
+As of now, this app has no formal support for injecting application secrets into an instance of this service. That means that it can only make 60 requests an hour.
+
+Such is life.
+
 ## References
 
 * [Github API - User Details](https://developer.github.com/v3/users/#get-contextual-information-about-a-user)
