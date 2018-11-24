@@ -17,3 +17,6 @@ publish.sh
 README.md
 VERSION
 .git/
+
+# analysis
+analyze/

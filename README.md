@@ -61,7 +61,7 @@ Such is life.
 
 The UI and supporting server code in this project mainly support an interactive one user at a time workflow. However, they can be used to support another workflow: tracking the open source participation of a group of users, such as all members of a meetup group or participants in a company's open source initiatives.
 
-To run such an analysis for the first time, do the following:
+### Running this analysis for the first time
 
 1. Kick up an instance of the app running on `localhost`:
 
@@ -88,9 +88,8 @@ user_name,full_name
 
 4. Run the update script that will seed the database with users and pull events for each of them
 
-
 ```
-cd analyze
+cd analyze/
 python analyze.py
 ```
 
@@ -100,6 +99,18 @@ For example, you can run this to dump the count of events by user name.
 
 ```
 echo 'SELECT user_name, COUNT(*) FROM events GROUP BY user_name;' | sqlite3 thing.db
+```
+
+### Updating an existing DB
+
+The Github API only allows you to get the last 90 days of activity, so you may want to run this process regularly to build up a longer history over time. 
+
+If you already have the CSV and DB files generated, just kick up the service and run the update script! 
+
+```
+docker run -p 5090:5090 -d oss_report:$(cat VERSION)
+cd analyze/
+python analyze.py
 ```
 
 ## References
