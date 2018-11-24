@@ -140,4 +140,9 @@ class GithubClient():
                 "evidence_url": event['repo']['url']
             }
 
+        # Always grab the id and created date
+        if out is not None:
+            out['id'] = event['id']
+            out['created_at'] = event['created_at']
+
         return(out)
