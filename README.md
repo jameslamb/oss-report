@@ -57,6 +57,51 @@ As of now, this app has no formal support for injecting application secrets into
 
 Such is life.
 
+## Case Study: Analyzing an Organizational Open Source Program
+
+The UI and supporting server code in this project mainly support an interactive one user at a time workflow. However, they can be used to support another workflow: tracking the open source participation of a group of users, such as all members of a meetup group or participants in a company's open source initiatives.
+
+To run such an analysis for the first time, do the following:
+
+1. Kick up an instance of the app running on `localhost`:
+
+```
+docker run -p 5090:5090 -d oss_report:$(cat VERSION)
+```
+
+2. Generate a [SQLite](https://docs.python.org/2/library/sqlite3.html) database file in the `analyze/` folder.
+
+```
+cat analyze/schema.sql | sqlite3 analyze/thing.db
+```
+
+3. Populate a CSV called `thing.csv` with your users.
+
+Headers:
+
+```
+user_name,full_name
+```
+
+* `user_name`: Github user name (e.g. `jameslamb`)
+* `full_name`: full first and last name (`James Lamb`)
+
+4. Run the update script that will seed the database with users and pull events for each of them
+
+
+```
+cd analyze
+python analyze.py
+```
+
+5. You can now query `thing.db` to build any reports you want!
+
+For example, you can run this to dump the count of events by user name.
+
+```
+echo 'SELECT user_name, COUNT(*) FROM events GROUP BY user_name;' | sqlite3 thing.db
+```
+
 ## References
 
 * [Github API - User Details](https://developer.github.com/v3/users/#get-contextual-information-about-a-user)
