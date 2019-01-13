@@ -21,7 +21,8 @@ RUN pip install \
     # flask deps \
     Flask \
     flask_cors \
-    simplejson
+    simplejson \
+    requests
 
 # Change dirs to wherever the flask code is
 WORKDIR /opt/services/flaskapp/src/frontend

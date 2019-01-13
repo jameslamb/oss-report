@@ -1,0 +1,14 @@
+git:
+  depth: 1
+
+services:
+  - docker
+
+before_install:
+  - docker build -t oss_report:$(cat VERSION) -f Dockerfile-app .
+  - docker run -p 5090:5090 -d oss_report:$(cat VERSION)
+
+script:
+  - sleep 5
+  - docker ps
+  - curl -X GET localhost:5090
