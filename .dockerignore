@@ -20,3 +20,6 @@ VERSION
 
 # analysis
 analyze/
+
+# Secrets
+creds.env

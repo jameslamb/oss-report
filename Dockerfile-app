@@ -18,11 +18,11 @@ EXPOSE 5090
 
 # Get other Python deps deps
 RUN pip install \
-    # flask deps \
+    click \
     Flask \
     flask_cors \
-    simplejson \
-    requests
+    requests \
+    simplejson
 
 # Change dirs to wherever the flask code is
 WORKDIR /opt/services/flaskapp/src/frontend

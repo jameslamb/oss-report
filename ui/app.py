@@ -37,9 +37,6 @@ def get_events():
     assert isinstance(events, list)
 
     # create the "activity" section
-    # TODO:
-    # There are definitely more elegant ways to do
-    # this and it prolly belongs in the client
     type_map = {
         'IssuesEvent': "issues created",
         'PullRequestEvent': "PRs created",

@@ -26,9 +26,13 @@ class GithubClient():
         # Grabbing auth details
         auth_token = os.environ.get('GITHUB_PAT', None)
         if auth_token is None:
-            print("Environment variable GITHUB_PAT not found. Making unauthenticated requests.")
+            msg = "Environment variable GITHUB_PAT not found. " + \
+                  "Making unauthenticated requests."
+            print(msg)
         else:
-            print("Found env variable GITHUB_PAT. Making authenticated requests.")
+            msg = "Found env variable GITHUB_PAT. " + \
+                  "Making authenticated requests."
+            print(msg)
             self._headers['Authorization'] = "token " + auth_token
 
     def get(self, url):
@@ -55,7 +59,7 @@ class GithubClient():
             if event_type in self.event_types:
                 try:
                     parsed = self._parse_event(event)
-                except:
+                except Exception:
                     print("WARNING: could not parse event")
                     print(event)
                     parsed = None
