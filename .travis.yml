@@ -9,4 +9,5 @@ before_install:
   - docker run -p 5090:5090 -d oss_report:$(cat VERSION)
 
 script:
-  - curl 127.0.0.1:5090
+  - docker ps
+  - curl -X GET localhost:5090

@@ -120,3 +120,4 @@ python analyze.py
 * [collapsables in Vue](https://bootstrap-vue.js.org/docs/components/collapse/)
 * [approachable ECS tutorial](https://www.ybrikman.com/writing/2015/11/11/running-docker-aws-ground-up/)
 * [docker-compose on Travis](http://elliot.land/post/using-docker-compose-on-travis-ci)
+* [docker in Travis builds](https://docs.travis-ci.com/user/docker/)
