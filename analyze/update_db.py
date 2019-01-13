@@ -24,7 +24,7 @@ import click
     help="URL for the oss_report API. On local, this might be " +
          "'http://localhost:5090'"
 )
-def main(self, csv_file, db_file, api_url):
+def main(csv_file, db_file, api_url):
     """
     Update a database of Github user activity.
     """
@@ -47,8 +47,9 @@ def main(self, csv_file, db_file, api_url):
         try:
             cur.execute(user_insert_sql, user)
             conn.commit()
+            print("[INFO] Created user '{}'".format(user[0]))
         except sqlite3.IntegrityError:
-            print("User {} already exists".format(user[0]))
+            print("[WARN] User '{}'' already exists".format(user[0]))
 
     # Grab users from the database
     cur.execute('SELECT user_name FROM users')

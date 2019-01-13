@@ -95,6 +95,8 @@ For example:
 ```
 echo "user_name,full_name" > thing.csv
 echo "jameslamb,James Lamb" >> thing.csv
+echo "bburns632,Brian Burns" >> thing.csv
+echo "jayqi,Jay Qi" >> thing.csv
 ```
 
 4. Run the update script that will seed the database with users and pull events for each of them
@@ -108,10 +110,14 @@ python analyze/update_db.py \
 
 5. You can now query `thing.db` to build any reports you want!
 
-For example, you can run this to dump the count of events by user name.
+For example, you can run this to get an overview of activity by user.
 
 ```
-echo 'SELECT user_name, COUNT(*) FROM events GROUP BY user_name;' | sqlite3 thing.db
+sqlite3 \
+    -column \
+    -header \
+    thing.db \
+    'SELECT user_name, COUNT(*) AS total_contributions, COUNT(DISTINCT(repo_name)) AS num_unique_repos FROM events GROUP BY user_name;'
 ```
 
 ### Updating an existing DB

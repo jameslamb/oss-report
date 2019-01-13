@@ -3,6 +3,7 @@ import json
 import re
 import requests
 from requests.utils import parse_header_links
+import os
 
 
 class GithubClient():
@@ -86,7 +87,7 @@ class GithubClient():
             print("Working on page {}".format(page_num))
 
             # get this page
-            self.get(url=next_url)
+            res = self.get(url=next_url)
 
             # add result to results
             res_list = json.loads(res.text)
