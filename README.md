@@ -90,7 +90,7 @@ user_name,full_name
 
 ```
 cd analyze/
-python analyze.py
+python update_db.py
 ```
 
 5. You can now query `thing.db` to build any reports you want!
@@ -110,7 +110,7 @@ If you already have the CSV and DB files generated, just kick up the service and
 ```
 docker run -p 5090:5090 -d oss_report:$(cat VERSION)
 cd analyze/
-python analyze.py
+python update_db.py
 ```
 
 ## References
