@@ -63,7 +63,10 @@ for user_name in user_names:
     inserts = 0
     for event in events:
         try:
-            cur.execute(event_insert_sql, [event[k] for k in event_fields] + [user_name])
+            cur.execute(
+                event_insert_sql,
+                [event[k] for k in event_fields] + [user_name]
+            )
             conn.commit()
             inserts += 1
         except sqlite3.IntegrityError:

@@ -20,6 +20,25 @@ class GithubClient():
             'ForkEvent'
         ]
 
+        # Set headers
+        self._headers = {}
+
+        # Grabbing auth details
+        auth_token = os.environ.get('GITHUB_PAT', None)
+        if auth_token is None:
+            print("Environment variable GITHUB_PAT not found. Making unauthenticated requests.")
+        else:
+            print("Found env variable GITHUB_PAT. Making authenticated requests.")
+            self._headers['Authorization'] = "token " + auth_token
+
+    def get(self, url):
+        """
+        Issue an HTTP GET request against the Github API
+        """
+        res = requests.get(url, headers=self._headers)
+        res.raise_for_status()
+        return(res)
+
     def get_events_for_user(self, user):
         """
         'events' are a data source GitHub users to track
@@ -63,10 +82,7 @@ class GithubClient():
             print("Working on page {}".format(page_num))
 
             # get this page
-            res = requests.get(
-               url=next_url
-            )
-            res.raise_for_status()
+            self.get(url=next_url)
 
             # add result to results
             res_list = json.loads(res.text)

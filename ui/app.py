@@ -9,9 +9,11 @@ from sys import stdout
 from GithubClient import GithubClient
 
 # render our special templates
-app = Flask(__name__,
-            static_folder="./frontend/dist/static",
-            template_folder="./frontend/dist")
+app = Flask(
+    __name__,
+    static_folder="./frontend/dist/static",
+    template_folder="./frontend/dist"
+)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
