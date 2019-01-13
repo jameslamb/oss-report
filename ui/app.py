@@ -9,9 +9,11 @@ from sys import stdout
 from GithubClient import GithubClient
 
 # render our special templates
-app = Flask(__name__,
-            static_folder="./frontend/dist/static",
-            template_folder="./frontend/dist")
+app = Flask(
+    __name__,
+    static_folder="./frontend/dist/static",
+    template_folder="./frontend/dist"
+)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -35,9 +37,6 @@ def get_events():
     assert isinstance(events, list)
 
     # create the "activity" section
-    # TODO:
-    # There are definitely more elegant ways to do
-    # this and it prolly belongs in the client
     type_map = {
         'IssuesEvent': "issues created",
         'PullRequestEvent': "PRs created",

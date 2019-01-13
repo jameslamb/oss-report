@@ -53,9 +53,19 @@ Note that this will tag the container with the version number stored in `VERSION
 
 Note that this service hits the Github API. This API's [rate limit policy](https://developer.github.com/v3/#rate-limiting) states that unauthenticated requests are limited (by IP address) to 60 requests per hour. Authenticated requests are limited to 5000 an hour.
 
-As of now, this app has no formal support for injecting application secrets into an instance of this service. That means that it can only make 60 requests an hour.
+If you want to run this app authenticated as your Github user, set the `GITHUB_PAT` environment variable to an OAUTH2 token generated from https://github.com/settings/tokens.
 
-Such is life.
+I recommend setting up a `.env` file with something like this:
+
+```
+GITHUB_PAT="my_github_key"
+```
+
+And then reading it into the container at run time.
+
+```
+docker run -p 5090:5090 --env-file creds.env -d jameslamb/oss_report:0.0.1
+```
 
 ## Case Study: Analyzing an Organizational Open Source Program
 
@@ -72,33 +82,42 @@ docker run -p 5090:5090 -d oss_report:$(cat VERSION)
 2. Generate a [SQLite](https://docs.python.org/2/library/sqlite3.html) database file in the `analyze/` folder.
 
 ```
-cat analyze/schema.sql | sqlite3 analyze/thing.db
+cat analyze/schema.sql | sqlite3 thing.db
 ```
 
-3. Populate a CSV called `thing.csv` with your users.
-
-Headers:
-
-```
-user_name,full_name
-```
+3. Populate a CSV with your users.
 
 * `user_name`: Github user name (e.g. `jameslamb`)
 * `full_name`: full first and last name (`James Lamb`)
 
+For example:
+
+```
+echo "user_name,full_name" > thing.csv
+echo "jameslamb,James Lamb" >> thing.csv
+echo "bburns632,Brian Burns" >> thing.csv
+echo "jayqi,Jay Qi" >> thing.csv
+```
+
 4. Run the update script that will seed the database with users and pull events for each of them
 
 ```
-cd analyze/
-python update_db.py
+python analyze/update_db.py \
+    --csv-file $(pwd)/thing.csv \
+    --db-file $(pwd)/thing.db \
+    --api-url http://localhost:5090
 ```
 
 5. You can now query `thing.db` to build any reports you want!
 
-For example, you can run this to dump the count of events by user name.
+For example, you can run this to get an overview of activity by user.
 
 ```
-echo 'SELECT user_name, COUNT(*) FROM events GROUP BY user_name;' | sqlite3 thing.db
+sqlite3 \
+    -column \
+    -header \
+    thing.db \
+    'SELECT user_name, COUNT(*) AS total_contributions, COUNT(DISTINCT(repo_name)) AS num_unique_repos FROM events GROUP BY user_name;'
 ```
 
 ### Updating an existing DB

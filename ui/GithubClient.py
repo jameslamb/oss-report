@@ -3,6 +3,7 @@ import json
 import re
 import requests
 from requests.utils import parse_header_links
+import os
 
 
 class GithubClient():
@@ -20,6 +21,29 @@ class GithubClient():
             'ForkEvent'
         ]
 
+        # Set headers
+        self._headers = {}
+
+        # Grabbing auth details
+        auth_token = os.environ.get('GITHUB_PAT', None)
+        if auth_token is None:
+            msg = "Environment variable GITHUB_PAT not found. " + \
+                  "Making unauthenticated requests."
+            print(msg)
+        else:
+            msg = "Found env variable GITHUB_PAT. " + \
+                  "Making authenticated requests."
+            print(msg)
+            self._headers['Authorization'] = "token " + auth_token
+
+    def get(self, url):
+        """
+        Issue an HTTP GET request against the Github API
+        """
+        res = requests.get(url, headers=self._headers)
+        res.raise_for_status()
+        return(res)
+
     def get_events_for_user(self, user):
         """
         'events' are a data source GitHub users to track
@@ -36,7 +60,7 @@ class GithubClient():
             if event_type in self.event_types:
                 try:
                     parsed = self._parse_event(event)
-                except:
+                except Exception:
                     print("WARNING: could not parse event")
                     print(event)
                     parsed = None
@@ -63,10 +87,7 @@ class GithubClient():
             print("Working on page {}".format(page_num))
 
             # get this page
-            res = requests.get(
-               url=next_url
-            )
-            res.raise_for_status()
+            res = self.get(url=next_url)
 
             # add result to results
             res_list = json.loads(res.text)

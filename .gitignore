@@ -19,10 +19,13 @@ yarn-error.log*
 *.sln
 
 # UI stuff
-ui/frontend/package-lock.json
+**/package-lock.json
 ui/frontend/node_modules/
 ui/frontend/dist/
 
 # data files
-analyze/*.db
-analyze/*.csv
+**/*.db
+**/*.csv
+
+# secrets
+**/creds.env
